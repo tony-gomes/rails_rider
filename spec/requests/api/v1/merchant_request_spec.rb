@@ -58,6 +58,6 @@ describe 'Merchant Resources' do
 
     expect(response).to be_successful
     expect(merchant1.name).to_not eql(previous_name)
-    expect(merchant1.name).to eql('Merchant_Tester')
+    expect(merchant1.name).to eql('Merchant Tester')
   end
 end
