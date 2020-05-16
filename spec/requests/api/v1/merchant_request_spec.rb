@@ -47,4 +47,17 @@ describe 'Merchant Resources' do
     expect(response).to be_successful
     expect(merchant1.name).to eql(merchant_params[:name])
   end
+
+  it 'Merchant Update' do
+    id = create(:merchant).id
+    previous_name = Merchant.last.name
+    merchant_params = { name: "Merchant Tester" }
+
+    put "/api/v1/merchants/#{id}", params: { merchant: merchant_params}
+    merchant1 = Merchant.find_by(id: id)
+
+    expect(response).to be_successful
+    expect(merchant1.name).to_not eql(previous_name)
+    expect(merchant1.name).to eql('Merchant_Tester')
+  end
 end
