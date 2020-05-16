@@ -60,4 +60,17 @@ describe 'Merchant Resources' do
     expect(merchant1.name).to_not eql(previous_name)
     expect(merchant1.name).to eql('Merchant Tester')
   end
+
+  it 'Merchant Destroy' do
+    merchant1 = create(:merchant)
+
+    expect(Merchant.count).to eql(1)
+
+    delete "/api/v1/merchants/#{merchant1.id}"
+    expect { delete "/api/v1/merchant1s/#{merchant1.id}" }.to change(Merchant, :count).by(-1)
+
+    expect(response).to be_successful
+    expect(Merchant.count).to be_zero
+    expect { Merchant.find(merchant1.id) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end
