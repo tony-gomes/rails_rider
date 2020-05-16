@@ -4,7 +4,7 @@ describe 'Merchant Resources' do
   it 'Merchant Index' do
     create_list(:merchant, 3)
 
-    get "/api/v1/merchants"
+    get '/api/v1/merchants'
 
     merchants = JSON.parse(response.body, symbolize_names: true)
 
@@ -36,5 +36,15 @@ describe 'Merchant Resources' do
     expect(merchant[:id]).to be_kind_of(String)
     expect(merchant[:id].length).to eql(36)
     expect(merchant[:name]).not_to be_empty
+  end
+
+  it 'Merchant Create' do
+    merchant_params = { name: 'Some Merchant' }
+
+    post '/api/v1/merchants', params: { merchant: merchant_params }
+    merchant1 = Merchant.last
+
+    expect(response).to be_successful
+    expect(merchant1.name).to eql(merchant_params[:name])
   end
 end
