@@ -9,4 +9,12 @@ RSpec.describe Merchant, type: :model do
     expect(merchant1[:name]).not_to be_empty
     expect(merchant1[:name]).to be_kind_of(String)
   end
+
+  describe 'Merchant Validations' do
+    it { is_expected.to have_db_column(:id).of_type(:uuid) }
+    it { is_expected.to have_db_column(:created_at).of_type(:datetime) }
+    it { is_expected.to have_db_column(:updated_at).of_type(:datetime) }
+
+    it { should validate_presence_of :name }
+  end
 end
