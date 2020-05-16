@@ -66,8 +66,7 @@ describe 'Merchant Resources' do
 
     expect(Merchant.count).to eql(1)
 
-    delete "/api/v1/merchants/#{merchant1.id}"
-    expect { delete "/api/v1/merchant1s/#{merchant1.id}" }.to change(Merchant, :count).by(-1)
+    expect { delete "/api/v1/merchants/#{merchant1.id}" }.to change(Merchant, :count).by(-1)
 
     expect(response).to be_successful
     expect(Merchant.count).to be_zero
