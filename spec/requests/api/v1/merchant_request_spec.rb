@@ -34,8 +34,7 @@ describe 'Merchant Resources' do
     expect(response).to be_successful
     expect(merchant[:id]).to eq(id)
     expect(merchant[:id]).to be_kind_of(String)
-    expect(merchants[:id].length).to eql(36)
-    expect(merchants[:name]).not_to be_empty
-    binding.pry
+    expect(merchant[:id].length).to eql(36)
+    expect(merchant[:name]).not_to be_empty
   end
 end
