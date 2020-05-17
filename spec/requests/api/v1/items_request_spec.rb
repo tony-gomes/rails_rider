@@ -53,7 +53,7 @@ describe 'Items Resource' do
     item_params = {
                     name: 'Some Item',
                     description: 'Some Description',
-                    unit_price: 76939283
+                    unit_price: 76_939_283
                   }
 
     post '/api/v1/items', params: { item: item_params }
@@ -63,5 +63,29 @@ describe 'Items Resource' do
     expect(item1.name).to eql(item_params[:name])
     expect(item1.description).to eql(item_params[:description])
     expect(item1.unit_price).to eql(item_params[:unit_price])
+  end
+
+  it 'Items Update' do
+    id = create(:item).id
+    previous_name = Item.last.name
+    item_params = {
+                    name: 'Some Item',
+                    description: 'Some Description',
+                    unit_price: 76_939_283
+                  }
+
+    put "/api/v1/items/#{id}", params: { item: item_params }
+    item = Item.find_by(id: id)
+
+    expect(response).to be_successful
+
+    expect(item.name).to_not eql(previous_name)
+    expect(item.name).to eql('Some Item')
+
+    expect(item.description).to_not eql(previous_name)
+    expect(item.description).to eql('Some Description')
+
+    expect(item.unit_price).to_not eql(previous_name)
+    expect(item.unit_price).to eql(76_939_283)
   end
 end
