@@ -88,4 +88,16 @@ describe 'Items Resource' do
     expect(item.unit_price).to_not eql(previous_name)
     expect(item.unit_price).to eql(76_939_283)
   end
+
+  it 'Items Destroy' do
+    item1 = create(:item)
+
+    expect(Item.count).to eql(1)
+
+    expect { delete "/api/v1/items/#{item1.id}" }.to change(Item, :count).by(-1)
+
+    expect(response).to be_successful
+    expect(Item.count).to be_zero
+    expect { Item.find(item1.id) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end
