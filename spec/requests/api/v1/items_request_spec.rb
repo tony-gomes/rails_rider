@@ -51,10 +51,10 @@ describe 'Items Resource' do
 
   it 'Items Create' do
     item_params = {
-                        name: 'Some Item',
-                        description: 'Some Description',
-                        unit_price: 76939283
-                      }
+                    name: 'Some Item',
+                    description: 'Some Description',
+                    unit_price: 76939283
+                  }
 
     post '/api/v1/items', params: { item: item_params }
     item1 = Item.last
@@ -63,6 +63,5 @@ describe 'Items Resource' do
     expect(item1.name).to eql(item_params[:name])
     expect(item1.description).to eql(item_params[:description])
     expect(item1.unit_price).to eql(item_params[:unit_price])
-
   end
 end
