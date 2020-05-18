@@ -1,4 +1,4 @@
-class Api::V1::ItemsController < ApplicationController
+class Api::V1::Merchants::ItemsController < ApplicationController
   def index
     render json: Item.all
   end
@@ -22,6 +22,6 @@ class Api::V1::ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :description, :unit_price)
+    params.require(:item).permit(:merchant_id, :name, :description, :unit_price)
   end
 end
