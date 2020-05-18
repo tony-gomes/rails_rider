@@ -17,4 +17,8 @@ RSpec.describe Merchant, type: :model do
 
     it { should validate_presence_of :name }
   end
+
+  describe 'Merchant Relationships' do
+    it { should have_many :items }
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200517010645) do
+ActiveRecord::Schema.define(version: 20200517145331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 20200517010645) do
     t.integer "unit_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "merchant_id"
+    t.index ["merchant_id"], name: "index_items_on_merchant_id"
   end
 
   create_table "merchants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -30,4 +32,5 @@ ActiveRecord::Schema.define(version: 20200517010645) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "items", "merchants"
 end
