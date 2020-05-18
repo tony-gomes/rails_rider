@@ -5,8 +5,10 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :merchants, except: [:new, :edit]
       get '/merchants/:id/items', to: 'merchants#all_items'
+
       scope module: 'merchants' do
         resources :items, except: [:new, :edit]
+        get '/items/:id/merchant', to: 'items#item_merchant'
       end
     end
   end
