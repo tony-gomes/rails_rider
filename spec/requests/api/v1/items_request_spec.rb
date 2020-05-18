@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe 'Items Resource' do
-  it 'Items Index' do
+  it 'Item Index' do
+    merchant1 = create(:merchant)
     create_list(:item, 3)
 
     get "/api/v1/items"
@@ -14,7 +15,8 @@ describe 'Items Resource' do
     expect(items.count).to eql(3)
 
     expect(items.first).to be_kind_of(Hash)
-    expect(items.first.count).to eql(6)
+    expect(items.first.count).to eql(7)
+    expect(items.first[:merchant_id]).not_to be_empty
     expect(items.first[:id]).not_to eql(items.last[:id])
     expect(items.first[:id].length).to eql(36)
     expect(items.first[:name]).not_to be_empty
@@ -23,7 +25,8 @@ describe 'Items Resource' do
 
     expect(items.last).to be_kind_of(Hash)
     expect(items.last[:id]).not_to eql(items.first[:id])
-    expect(items.last.count).to eql(6)
+    expect(items.last.count).to eql(7)
+    expect(items.first[:merchant_id]).not_to be_empty
     expect(items.last[:id].length).to eql(36)
     expect(items.last[:name]).not_to be_empty
     expect(items.last[:description]).to be_kind_of(String)
@@ -32,7 +35,8 @@ describe 'Items Resource' do
   end
 
   it 'Item Show' do
-    id = create(:item).id
+    merchant1 = create(:merchant)
+    id = create(:item, merchant_id: merchant1.id).id
 
     get "/api/v1/items/#{id}"
 
@@ -49,8 +53,10 @@ describe 'Items Resource' do
     expect(item[:unit_price]).to be_kind_of(Integer)
   end
 
-  it 'Items Create' do
+  it 'Item Create' do
+    merchant1 = create(:merchant)
     item_params = {
+                    merchant_id: merchant1.id,
                     name: 'Some Item',
                     description: 'Some Description',
                     unit_price: 76_939_283
@@ -65,8 +71,9 @@ describe 'Items Resource' do
     expect(item1.unit_price).to eql(item_params[:unit_price])
   end
 
-  it 'Items Update' do
-    id = create(:item).id
+  it 'Item Update' do
+    merchant1 = create(:merchant)
+    id = create(:item, merchant_id: merchant1.id).id
     previous_name = Item.last.name
     item_params = {
                     name: 'Some Item',
@@ -89,8 +96,9 @@ describe 'Items Resource' do
     expect(item.unit_price).to eql(76_939_283)
   end
 
-  it 'Items Destroy' do
-    item1 = create(:item)
+  it 'Item Destroy' do
+    merchant1 = create(:merchant)
+    item1 = create(:item, merchant_id: merchant1.id)
 
     expect(Item.count).to eql(1)
 
