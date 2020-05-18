@@ -19,6 +19,11 @@ class Api::V1::ItemsController < ApplicationController
     render json: Item.delete(params[:id])
   end
 
+  def item_merchant
+    merchant_id = Item.find_by(id: params[:id]).merchant_id
+    render json: Merchant.find_by(id: merchant_id)
+  end
+
   private
 
   def item_params
