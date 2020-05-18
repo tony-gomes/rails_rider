@@ -31,7 +31,6 @@ describe 'Items Resource' do
     expect(items.last[:name]).not_to be_empty
     expect(items.last[:description]).to be_kind_of(String)
     expect(items.last[:unit_price]).to be_kind_of(Integer)
-
   end
 
   it 'Item Show' do
