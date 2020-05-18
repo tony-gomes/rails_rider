@@ -4,7 +4,7 @@ describe 'Merchant Resources' do
   it 'Merchant Index' do
     create_list(:merchant, 3)
 
-    get '/api/v1/merchants'
+    get "/api/v1/merchants"
 
     merchants = JSON.parse(response.body, symbolize_names: true)
 
@@ -41,7 +41,7 @@ describe 'Merchant Resources' do
   it 'Merchant Create' do
     merchant_params = { name: 'Some Merchant' }
 
-    post '/api/v1/merchants', params: { merchant: merchant_params }
+    post "/api/v1/merchants", params: { merchant: merchant_params }
     merchant1 = Merchant.last
 
     expect(response).to be_successful
@@ -71,5 +71,29 @@ describe 'Merchant Resources' do
     expect(response).to be_successful
     expect(Merchant.count).to be_zero
     expect { Merchant.find(merchant1.id) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
+
+  it 'Merchant Items Index' do
+    merchant1 = create(:merchant)
+    item1 = create(:item, merchant_id: merchant1.id)
+    item2 = create(:item, merchant_id: merchant1.id)
+    item3 = create(:item, merchant_id: merchant1.id)
+
+    get "/api/v1/merchants/#{merchant1.id}/items"
+
+    expect(response).to be_successful
+    items = JSON.parse(response.body, symbolize_names: true)
+
+    expect(items.count).to eql(3)
+    expect(items.first).to be_kind_of(Hash)
+    expect(items.last).to be_kind_of(Hash)
+
+    expect(items.first[:merchant_id]).to eql(merchant1.id)
+    expect(items.first[:id]).to eql(item1.id)
+    expect(items.first[:name]).to eql(item1.name)
+
+    expect(items.last[:merchant_id]).to eql(merchant1.id)
+    expect(items.last[:id]).to eql(item3.id)
+    expect(items.last[:name]).to eql(item3.name)
   end
 end
