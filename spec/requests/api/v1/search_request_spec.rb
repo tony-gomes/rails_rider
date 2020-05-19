@@ -33,17 +33,17 @@ describe 'Search Show' do
     expect(merchant[:name]).not_to eql(merchant1.name)
   end
 
-    it 'Merchants / Find Endpoint w/ Date' do
-      merchant1 = create(:merchant)
-      merchant2 = create(:merchant)
+    # it 'Merchants / Find Endpoint w/ Date' do
+    #   merchant1 = create(:merchant)
+    #   merchant2 = create(:merchant)
 
-      binding.pry
-      get "/api/v1/merchants/find?created_at=#{merchant2.created_at}"
+    #   binding.pry
+    #   get "/api/v1/merchants/find?created_at=#{merchant2.created_at}"
 
-      expect(response).to be_successful
-      merchant = JSON.parse(response.body, symbolize_names: true)
+    #   expect(response).to be_successful
+    #   merchant = JSON.parse(response.body, symbolize_names: true)
 
-      expect(merchant).to eql(1)
+    #   expect(merchant).to eql(1)
 
-    end
+    # end
 end
