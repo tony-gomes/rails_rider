@@ -2,23 +2,20 @@ require 'rails_helper'
 
 describe 'Items Resource' do
   it 'Item Index' do
-    merchant1 = create(:merchant)
-    create_list(:item, 3)
+    create(:item)
+    create(:item)
+    create(:item)
 
     get "/api/v1/items"
 
     expect(response).to be_successful
 
     items = JSON.parse(response.body, symbolize_names: true)
-
     expect(response).to be_successful
-    expect(items.count).to eql(3)
 
     expect(items.first).to be_kind_of(Hash)
     expect(items.first.count).to eql(7)
-    expect(items.first[:merchant_id]).not_to be_empty
     expect(items.first[:id]).not_to eql(items.last[:id])
-    expect(items.first[:id].length).to eql(36)
     expect(items.first[:name]).not_to be_empty
     expect(items.first[:description]).to be_kind_of(String)
     expect(items.first[:unit_price]).to be_kind_of(Integer)
@@ -26,8 +23,6 @@ describe 'Items Resource' do
     expect(items.last).to be_kind_of(Hash)
     expect(items.last[:id]).not_to eql(items.first[:id])
     expect(items.last.count).to eql(7)
-    expect(items.first[:merchant_id]).not_to be_empty
-    expect(items.last[:id].length).to eql(36)
     expect(items.last[:name]).not_to be_empty
     expect(items.last[:description]).to be_kind_of(String)
     expect(items.last[:unit_price]).to be_kind_of(Integer)
@@ -43,10 +38,8 @@ describe 'Items Resource' do
 
     expect(response).to be_successful
     expect(item[:id]).to eq(id)
-    expect(item[:id]).to be_kind_of(String)
-    expect(item[:id].length).to eql(36)
+    expect(item[:id]).to be_kind_of(Integer)
     expect(item[:name]).not_to be_empty
-    expect(item[:id].length).to eql(36)
     expect(item[:name]).not_to be_empty
     expect(item[:description]).to be_kind_of(String)
     expect(item[:unit_price]).to be_kind_of(Integer)
@@ -99,12 +92,9 @@ describe 'Items Resource' do
     merchant1 = create(:merchant)
     item1 = create(:item, merchant_id: merchant1.id)
 
-    expect(Item.count).to eql(1)
-
     expect { delete "/api/v1/items/#{item1.id}" }.to change(Item, :count).by(-1)
 
     expect(response).to be_successful
-    expect(Item.count).to be_zero
     expect { Item.find(item1.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
