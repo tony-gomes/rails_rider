@@ -20,7 +20,7 @@ merchant_csv.each do |row|
   m.save
 end
 
-puts "There are now #{Merchant.count} rows in the Merchant table"
+puts "There are now #{Merchant.count} rows in the Merchants table"
 
 # Items CSV
 item_csv_read = File.read(Rails.root.join('lib', 'seeds', 'items.csv'))
@@ -37,7 +37,7 @@ item_csv.each do |row|
   i.save
 end
 
-puts "There are now #{Item.count} rows in the Item table"
+puts "There are now #{Item.count} rows in the Items table"
 
 # Customers CSV
 customers_csv_read = File.read(Rails.root.join('lib', 'seeds', 'customers.csv'))
@@ -46,10 +46,9 @@ customers_csv.each do |row|
   c = Customer.new
   c.first_name = row['first_name']
   c.last_name = row['last_name']
-  c.name = c.first_name + " " + c.last_name
   c.created_at = row['created_at']
   c.updated_at = row['updated_at']
-  i.save
+  c.save
 end
 
 puts "There are now #{Customer.count} rows in the Customers table"
@@ -68,13 +67,13 @@ invoices_csv.each do |row|
   i.save
 end
 
-puts "There are now #{Invoices.count} rows in the Customers table"
+puts "There are now #{Invoice.count} rows in the Invoices table"
 
 # InvoiceItems CSV
 invoice_items_csv_read = File.read(Rails.root.join('lib', 'seeds', 'invoice_items.csv'))
 invoice_items_csv = CSV.parse(invoice_items_csv_read, :headers => true, :encoding => 'ISO-8859-1')
 invoice_items_csv.each do |row|
-  i = InvoiceItems.new
+  i = InvoiceItem.new
   i.id = row['id']
   i.item_id = row['item_id']
   i.invoice_id = row['invoice_id']
@@ -85,13 +84,13 @@ invoice_items_csv.each do |row|
   i.save
 end
 
-puts "There are now #{InvoiceItems.count} rows in the InvoiceItems table"
+puts "There are now #{InvoiceItem.count} rows in the InvoiceItems table"
 
 # Transactions CSV
 transactions_csv_read = File.read(Rails.root.join('lib', 'seeds', 'transactions.csv'))
 transactions_csv = CSV.parse(transactions_csv_read, :headers => true, :encoding => 'ISO-8859-1')
 transactions_csv.each do |row|
-  t = Transactions.new
+  t = Transaction.new
   t.id = row['id']
   t.invoice_id = row['invoice_id']
   t.credit_card_number = row['credit_card_number']
@@ -102,4 +101,4 @@ transactions_csv.each do |row|
   t.save
 end
 
-puts "There are now #{Transactions.count} rows in the Transactions table"
+puts "There are now #{Transaction.count} rows in the Transactions table"
