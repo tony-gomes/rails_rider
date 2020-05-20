@@ -3,4 +3,5 @@ class Transaction < ApplicationRecord
 
   validates :result, presence: true
   validates :credit_card_number, presence: true
+  validates :credit_card_expiration_date, presence: true
 end
