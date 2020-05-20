@@ -10,7 +10,7 @@ RSpec.describe Merchant, type: :model do
   end
 
   describe 'Merchant Validations' do
-    it { is_expected.to have_db_column(:id).of_type(Integer) }
+    it { is_expected.to have_db_column(:id).of_type(:integer) }
     it { is_expected.to have_db_column(:created_at).of_type(:datetime) }
     it { is_expected.to have_db_column(:updated_at).of_type(:datetime) }
 

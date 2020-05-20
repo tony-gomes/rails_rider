@@ -23,6 +23,14 @@ RSpec.describe Item, type: :model do
     expect(item1[:unit_price]).to be_kind_of(Integer)
   end
 
+  describe 'Merchant Validations' do
+    it { is_expected.to have_db_column(:id).of_type(:integer) }
+    it { is_expected.to have_db_column(:created_at).of_type(:datetime) }
+    it { is_expected.to have_db_column(:updated_at).of_type(:datetime) }
+
+    it { should validate_presence_of :name }
+  end
+
   describe 'Item Relationships' do
     it { should belong_to :merchant }
   end
