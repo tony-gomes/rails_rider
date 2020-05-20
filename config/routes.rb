@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      get '/:resource/find', to: 'search#show'
+
       resources :merchants, except: [:new, :edit]
       get '/merchants/:id/items', to: 'merchants#all_items'
 
