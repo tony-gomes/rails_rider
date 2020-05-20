@@ -9,7 +9,7 @@ RSpec.describe InvoiceItem, type: :model do
     expect(invoice_item1[:unit_price]).to be_kind_of(Integer)
   end
 
-  describe 'Customer Validations' do
+  describe 'InvoiceItem Validations' do
     it { is_expected.to have_db_column(:id).of_type(:integer) }
     it { is_expected.to have_db_column(:created_at).of_type(:datetime) }
     it { is_expected.to have_db_column(:updated_at).of_type(:datetime) }
@@ -18,7 +18,7 @@ RSpec.describe InvoiceItem, type: :model do
     it { should validate_presence_of :unit_price }
   end
 
-  describe 'Customer Relationships' do
+  describe 'InvoiceItem Relationships' do
     it { should belong_to :item }
     it { should belong_to :invoice }
   end
