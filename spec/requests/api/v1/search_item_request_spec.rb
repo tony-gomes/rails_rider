@@ -14,8 +14,6 @@ describe 'Search Show' do
     expect(response).to be_successful
     item = JSON.parse(response.body, symbolize_names: true)
 
-    expect(item[:id]).to eql(item3.id)
-    expect(item[:merchant_id]).to eql(merchant2.id)
     expect(item[:name]).to eql(item3.name)
 
     expect(item[:id]).not_to eql(item1.id)
