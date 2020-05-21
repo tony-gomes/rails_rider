@@ -4,7 +4,7 @@ describe 'Search Show' do
   it 'Merchants / Find Endpoint Exact Match' do
     merchant1 = create(:merchant)
     merchant2 = create(:merchant, name: "Test String")
-
+binding.pry
     get "/api/v1/merchants/find?name=test_string"
 
     expect(response).to be_successful
