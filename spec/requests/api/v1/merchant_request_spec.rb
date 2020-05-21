@@ -9,18 +9,15 @@ describe 'Merchant Resources' do
     merchants = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_successful
-    expect(merchants.count).to eql(3)
 
     expect(merchants.first).to be_kind_of(Hash)
     expect(merchants.first.count).to eql(4)
     expect(merchants.first[:id]).not_to eql(merchants.last[:id])
-    expect(merchants.first[:id].length).to eql(36)
     expect(merchants.first[:name]).not_to be_empty
 
     expect(merchants.last).to be_kind_of(Hash)
     expect(merchants.last[:id]).not_to eql(merchants.first[:id])
     expect(merchants.last.count).to eql(4)
-    expect(merchants.last[:id].length).to eql(36)
     expect(merchants.last[:name]).not_to be_empty
   end
 
@@ -33,8 +30,7 @@ describe 'Merchant Resources' do
 
     expect(response).to be_successful
     expect(merchant[:id]).to eq(id)
-    expect(merchant[:id]).to be_kind_of(String)
-    expect(merchant[:id].length).to eql(36)
+    expect(merchant[:id]).to be_kind_of(Integer)
     expect(merchant[:name]).not_to be_empty
   end
 
@@ -64,12 +60,9 @@ describe 'Merchant Resources' do
   it 'Merchant Destroy' do
     merchant1 = create(:merchant)
 
-    expect(Merchant.count).to eql(1)
-
     expect { delete "/api/v1/merchants/#{merchant1.id}" }.to change(Merchant, :count).by(-1)
 
     expect(response).to be_successful
-    expect(Merchant.count).to be_zero
     expect { Merchant.find(merchant1.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
